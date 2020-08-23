@@ -3,14 +3,6 @@ os.system('clear')
 from tkinter import *
 from PIL import ImageTk, Image
 
-#print('Please type the nominal values for the componentes:\n\n')
-'''
-def calculate():
-	Vo = (Vs*R3*(R2+R4))/(R3*(-R1-R2+R4)-R2*(3*R2+2*R1)-R4*(R1+R2))
-	Isc = (-1*Vs*(R2+R4))/(R2*(2*R1+3*R2+R4)+R1*R4)
-	Rth = Vo/Isc
-	#Rth_ = (-R3*(R2*(2*R1+3*R2+R4)+R1*R4))/(R3*(-R1-R2+R4)-R2*(3*R2+2*R1)-R4*(R1+R2))
-'''
 def delete_values():
 	Vs.set("")
 	R1.set("")
@@ -22,33 +14,22 @@ def calculate(Vs_, R1_, R2_, R3_, R4_):
 	Vo_ = (Vs_*R3_*(R2_+R4_))/(R3_*(-R1_-R2_+R4_)-R2_*(3*R2_+2*R1_)-R4_*(R1_+R2_))
 	Isc_ = (-1*Vs_*(R2_+R4_))/(R2_*(2*R1_+3*R2_+R4_)+R1_*R4_)
 	Rth_ = Vo_/Isc_
-	#Vo.set(Vo); Isc.set(Isc); Rth.set(Rth);
 	Vo.set(Vo_); Isc.set(Isc_); Rth.set(Rth_);
 	Vo_label_ = Label(root, textvariable = str(Vo)).grid(row = 6, column = 1)
 	Isc_label_ = Label(root, textvariable = str(Isc)).grid(row = 7, column = 1)
 	Rth_label_ = Label(root, textvariable = str(Rth)).grid(row = 8, column = 1)
-
 	#Rth_ = (-R3*(R2*(2*R1+3*R2+R4)+R1*R4))/(R3*(-R1-R2+R4)-R2*(3*R2+2*R1)-R4*(R1+R2))
 
 root = Tk()
 root.title('Thevenin Estimation - Edgar Lara')
-#root.geometry('400x300')
 root.configure(background='#212F3C')
-#imagen.configure( file = "Circuit_diagram.png" )
 image = PhotoImage( file = "Circuit_diagram.png" )
-#image.resize((450, 350), Image.ANTIALIAS)
-'''
-image = Image.open('C:/Users/edfli/Desktop/Circuits/Measurement-and-instrumentation/03M1-Estimation_Thevenin_Resistance/Circuit_diagram.png')
-# The (450, 350) is (height, width)
-#image = image.resize((450, 350), Image.ANTIALIAS)
-image_label = ImageTk.PhotoImage(image)
-'''
+
 Vs = StringVar(); R1 = StringVar(); R2 = StringVar(); R3 = StringVar(); R4 = StringVar();
 Vs.set(5); R1.set(2000); R2.set(1000); R3.set(500); R4.set(10000);
 Vo = StringVar(); Isc = StringVar(); Rth = StringVar();
 Vo.set(""); Isc.set(""); Rth.set("") 
 
-#image_label = Label( root, image = imagen).grid(row = 0)
 image_label = Label(image = image).grid(row = 0, padx=27, pady=20, columnspan=2)
 
 Vs_label = Label(root, text = "Vs = ").grid(row = 1, column = 0)
