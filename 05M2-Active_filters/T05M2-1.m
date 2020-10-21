@@ -1,36 +1,25 @@
-graphics_toolkit('gnuplot')
+%Programa 5-7
+
 pkg load control
 clear all
 clc
-clf
-s = tf('s');
-
-C1 = 300e-9;
-C2 = 120e-12;
-R = 1000;
-RA = 3000;
-RB = 2000;
+%clf
 
 
-%Parte 1
-p1_1 = 1/(C1*C2*R^2);
-p1_2 = (2/(R*C1));
-p1_3 = 1/(C1*C2*R^2);
+num = [25];
+den = [1 6 25];
+t = 0:0.005:5;
+[y,x,t] = step(tf(num,den),t);
+r=1; while y(r)<1.0001; r = r+1;end;
+tiempo_subida = (r-1)*0.005
 
-g1 = p1_1/(s**2 + s*p1_2 + p1_3);
+[ymax,tp] = max(y);
+tiempo_pico = (tp-1)*0.005
 
-%Parte 2
-p2_1 = p1_1*(1+(RB/RA));
-p2_2 = p1_2 - ((1/R*C2)*(RB/RA));
-p2_3 = p1_3;
+sobreelongacion_max = ymax-1
 
-g2 = p2_1/(s**2 + s*p2_2 + p2_3);
-
-
-
-x = input('Grafica 1 o 2: ');
-if (x == 1)
-  step(g1)
-elseif (x == 2)
-  step(g2)
-endif
+s = 1001;
+while y(s)>0.98 && y(s)<1.02;
+  s=s-1;
+end;
+tiempo_asentamiento = (s-1)*0.005
