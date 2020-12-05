@@ -110,7 +110,7 @@ def Radiografia_senal_filtrada():
 	#Angle2=(180/pi)*PhaseAudio2
 
 ############################################################################################################
-#Graficas de radiografcias de senales de audio
+#Graficas de radiografias de senales de audio
 def Grafica_radiografias():
 	F_3 = plt.plot(f1,logY1,'b', label = 'Radiografia senal original')
 	plt.plot(f2,logY2,'r', label = 'Radiografia senal filtrada')
@@ -127,7 +127,19 @@ def Grafica_senales():
 	plt.grid(color='k', linestyle='--', linewidth=0.5)
 	plt.show()
 	#linewidth=0.5
-
+############################################################################################################
+#Graficas mixta senales-radiografias
+def Grafico_mixta():
+	f = plt.figure(figsize=(15,4.5))
+	senales_ = f.add_subplot(121)
+	Radiografia_ = f.add_subplot(122)
+	senales_.plot(y,'b', label = 'Senal original')
+	senales_.plot(FilteredSignal,'r', label = 'Senal filtrada')
+	senales_.legend(); senales_.grid(color='k', linestyle='--', linewidth=0.5)
+	Radiografia_.plot(f1,logY1,'b', label = 'Radiografia senal original')
+	Radiografia_.plot(f2,logY2,'r', label = 'Radiografia senal filtrada')
+	Radiografia_.legend(); Radiografia_.grid(color='k', linestyle='--', linewidth=0.5)
+	plt.show()
 ################################ Seccion de funciones para botones #########################################
 #Boton grabar
 def Btn_grabar():
@@ -143,15 +155,18 @@ def Btn_play_filtrado(name_file, flow_, fhigh_):
 	Radiografia_senal()
 	Frecuencias_corte(flow_, fhigh_)
 	Play_audio_filtrado()
-#Boton graficar ########################################
-def Btn_graficar(name_file, flow_, fhigh_):
-	Open_audio(name_file+'.wav')
-	Definir_variables()
-	Radiografia_senal()
-	Frecuencias_corte(flow_, fhigh_)
-	Radiografia_senal_filtrada()
-	Grafica_radiografias()
+#Botones para  graficar ########################################
+def Btn_graficar_senales(name_file, flow_, fhigh_):
+	Open_audio(name_file+'.wav'); Definir_variables(); Radiografia_senal(); Frecuencias_corte(flow_, fhigh_); Radiografia_senal_filtrada()
 	Grafica_senales()
+
+def Btn_graficar_radiografias(name_file, flow_, fhigh_):
+	Open_audio(name_file+'.wav'); Definir_variables(); Radiografia_senal(); Frecuencias_corte(flow_, fhigh_); Radiografia_senal_filtrada()
+	Grafica_radiografias()
+
+def Btn_grafica_mixta(name_file, flow_, fhigh_):
+	Open_audio(name_file+'.wav'); Definir_variables(); Radiografia_senal(); Frecuencias_corte(flow_, fhigh_); Radiografia_senal_filtrada()
+	Grafico_mixta()
 
 ############################################################################################################
 ########################################## Seccion de Front-End ############################################
@@ -161,8 +176,6 @@ def delete_values():
 	F_low.set("")
 	F_high.set("")
 	Name_File.set("")
-	R3.set("")
-	R4.set("")
 
 def close_window(): 
 	    root.destroy()
@@ -191,11 +204,12 @@ F_low__entry = Entry(root, textvariable = F_low, width =10).grid(row = 3, column
 F_high_entry = Entry(root, textvariable = F_high, width =10).grid(row = 4, column = 1)
 Name_File_entry = Entry(root, textvariable = Name_File).grid(row = 3, column = 3)
 
+############################################################################################################
 #Botones
 Erase_button = Button(root, bg ='#008B8B', fg='white', text = "Limpiar valores", width =15, command = delete_values).grid(row = 8, column = 0, padx=2, pady=2)
 Record_button = Button(root, bg ='#008B8B', fg='white', text = "Grabar", width =20, command = Btn_grabar).grid(row = 2, column = 3, padx=2, pady=2)
 Play_Rec_O_button = Button(root, bg ='#483D8B', fg='white', text = "Play Original", width =20, command = lambda: Btn_play(Name_File.get())).grid(row = 4, column = 3, padx=2, pady=2)
 Play_Rec_F_button = Button(root, bg ='#483D8B', fg='white', text = "Play Filtrado", width =20, command = lambda: Btn_play_filtrado(Name_File.get(), float(F_low.get()), float(F_high.get()))).grid(row = 5, column = 3, padx=2, pady=2)
-Plot_Rec_button = Button(root, bg ='#483D8B', fg='white', text = "Graficar", width =20, command = lambda: Btn_graficar(Name_File.get(), float(F_low.get()), float(F_high.get()))).grid(row = 6, column = 3, padx=2, pady=2)
+Plot_Rec_button = Button(root, bg ='#483D8B', fg='white', text = "Graficar", width =20, command = lambda: Btn_grafica_mixta(Name_File.get(), float(F_low.get()), float(F_high.get()))).grid(row = 6, column = 3, padx=2, pady=2)
 my_button_close = Button(root, text="Cerrar ventana", bg ='red', fg='white', width =20, command=close_window).grid(row = 8, column = 3) 
 root.mainloop()
