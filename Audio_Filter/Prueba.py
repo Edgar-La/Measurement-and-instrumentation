@@ -108,7 +108,7 @@ def Radiografia_senal_filtrada():
 	#Angle2=(180/pi)*PhaseAudio2
 
 ############################################################################################################
-#Graficas de radiografcias de senales de audio
+#Graficas de radiografias de senales de audio
 def Grafica_radiografias():
 	F_3 = plt.plot(f1,logY1,'b', label = 'Radiografia senal original')
 	plt.plot(f2,logY2,'r', label = 'Radiografia senal filtrada')
@@ -126,6 +126,18 @@ def Grafica_senales():
 	plt.show()
 	#linewidth=0.5
 
+def Grafico_mixta():
+	f = plt.figure(figsize=(15,4.5))
+	senales_ = f.add_subplot(121)
+	Radiografia_ = f.add_subplot(122)
+	senales_.plot(y,'b', label = 'Senal original')
+	senales_.plot(FilteredSignal,'r', label = 'Senal filtrada')
+	senales_.legend(); senales_.grid(color='k', linestyle='--', linewidth=0.5)
+	Radiografia_.plot(f1,logY1,'b', label = 'Radiografia senal original')
+	Radiografia_.plot(f2,logY2,'r', label = 'Radiografia senal filtrada')
+	Radiografia_.legend(); Radiografia_.grid(color='k', linestyle='--', linewidth=0.5)
+	plt.show()
+
 ################################ Seccion de funciones para botones #########################################
 #Boton grabar
 def Btn_grabar():
@@ -142,17 +154,23 @@ def Btn_play_filtrado(name_file):
 	Frecuencias_corte(400, 800)
 	Play_audio_filtrado()
 #Boton graficar ########################################
-def Btn_graficar(name_file):
-	Open_audio(name_file)
-	Definir_variables()
-	Radiografia_senal()
-	Frecuencias_corte(400, 800)
-	Radiografia_senal_filtrada()
-	Grafica_radiografias()
+def Btn_graficar_senales(name_file):
+	Open_audio(name_file); Definir_variables(); Radiografia_senal(); Frecuencias_corte(400, 800); Radiografia_senal_filtrada()
 	Grafica_senales()
+
+def Btn_graficar_radiografias(name_file):
+	Open_audio(name_file); Definir_variables(); Radiografia_senal(); Frecuencias_corte(400, 800); Radiografia_senal_filtrada()
+	Grafica_radiografias()
+
+def Btn_grafica_mixta(name_file):
+	Open_audio(name_file); Definir_variables(); Radiografia_senal(); Frecuencias_corte(400, 800); Radiografia_senal_filtrada()
+	Grafico_mixta()
 ############################################################################################################
-file = 'MESSAGE.wav'
+file = 'Grabacion.wav'
 #Btn_grabar()
-Btn_play(file)
-Btn_play_filtrado(file)
-Btn_graficar(file)
+#Btn_play(file)
+#Btn_play_filtrado(file)
+#Btn_graficar(file)
+#Btn_graficar_senales(file)
+#Btn_graficar_radiografias(file)
+Btn_grafica_mixta(file)
