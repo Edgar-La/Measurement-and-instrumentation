@@ -110,8 +110,8 @@ def Radiografia_senal_filtrada():
 ############################################################################################################
 #Graficas de radiografcias de senales de audio
 def Grafica_radiografias():
-	F_3 = plt.plot(f1,logY1,'b', label = 'Radiografia senal original', linewidth=0.5)
-	plt.plot(f2,logY2,'r', label = 'Radiografia senal filtrada', linewidth=0.5)
+	F_3 = plt.plot(f1,logY1,'b', label = 'Radiografia senal original')
+	plt.plot(f2,logY2,'r', label = 'Radiografia senal filtrada')
 	plt.legend()
 	plt.grid(color='k', linestyle='--', linewidth=0.5)
 	plt.show()
@@ -119,20 +119,40 @@ def Grafica_radiografias():
 ############################################################################################################
 #Graficas de senales de audio
 def Grafica_senales():
-	F_4 = plt.plot(y,'b', label = 'Senal original', linewidth=0.5)
-	plt.plot(FilteredSignal,'r', label = 'Senal filtrada', linewidth=0.5)
+	F_4 = plt.plot(y,'b', label = 'Senal original')
+	plt.plot(FilteredSignal,'r', label = 'Senal filtrada')
 	plt.legend()
 	plt.grid(color='k', linestyle='--', linewidth=0.5)
 	plt.show()
+	#linewidth=0.5
 
-
-#Record_audio()
-Open_audio('Grabacion_E.wav')
-Play_audio()
-Definir_variables()
-Radiografia_senal()
-Frecuencias_corte(400, 800)
-Play_audio_filtrado()
-Radiografia_senal_filtrada()
-Grafica_radiografias()
-Grafica_senales()
+################################ Seccion de funciones para botones #########################################
+#Boton grabar
+def Btn_grabar():
+	Record_audio()
+#Boton play original ###################################
+def Btn_play(name_file):
+	Open_audio(name_file)
+	Play_audio()
+#Boton ply filtrado ####################################
+def Btn_play_filtrado(name_file):
+	Open_audio(name_file)
+	Definir_variables()
+	Radiografia_senal()
+	Frecuencias_corte(400, 800)
+	Play_audio_filtrado()
+#Boton graficar ########################################
+def Btn_graficar(name_file):
+	Open_audio(name_file)
+	Definir_variables()
+	Radiografia_senal()
+	Frecuencias_corte(400, 800)
+	Radiografia_senal_filtrada()
+	Grafica_radiografias()
+	Grafica_senales()
+############################################################################################################
+file = 'MESSAGE.wav'
+#Btn_grabar()
+Btn_play(file)
+Btn_play_filtrado(file)
+Btn_graficar(file)
