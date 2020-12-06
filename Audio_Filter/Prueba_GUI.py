@@ -31,7 +31,7 @@ Section_Record = Label(root, bg = '#20B2AA', text = "    Controles de audio    "
 Section_Record = Label(root, bg = '#20B2AA', text = "    Controles de audio    ").grid(row = 1, column = 3,  padx=2, pady=2)
 
 files_names = ['Grabacion.wav', 'Test.wav','Grabacion_E.wav']
-Name_File_box = StringVar(); Name_File_box.set(files_names[0])
+#Name_File_box = StringVar(); Name_File_box.set(files_names[0])
 F_low__entry = Entry(root, textvariable = F_low, width =10).grid(row = 3, column = 1)
 F_high_entry = Entry(root, textvariable = F_high, width =10).grid(row = 4, column = 1)
 #Name_File_entry = Entry(root, textvariable = Name_File).grid(row = 3, column = 3)
