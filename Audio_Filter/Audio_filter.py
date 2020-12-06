@@ -7,7 +7,7 @@ from scipy.signal import butter, filtfilt
 import numpy as np
 from math import pi
 from time import sleep
-from tkinter import *; from tkinter import ttk
+from tkinter import *; from tkinter import ttk, messagebox
 from PIL import ImageTk, Image
 import os
 os.system('clear')
@@ -15,7 +15,7 @@ os.system('clear')
 fs = 44100
 ########################################## Seccion de Back-End #############################################
 def Record_audio():
-	global seconds; global y; global fs; 
+	global seconds; global y; global fs;
 	seconds = 2
 	#Grabar audio
 	print('Grabando...')
@@ -44,8 +44,8 @@ def Definir_variables():
 	global Longy; global seconds; global Diftime; global time; 
 	Longy = len(y)
 	#Diftime = seconds/Longy;
-	#seconds = Longy/fs
-	seconds = 2
+	seconds = Longy/fs
+	#seconds = 2
 	Diftime = 1/fs
 	time = np.arange(0, seconds, Diftime).tolist()
 
@@ -144,7 +144,9 @@ def Grafico_mixta():
 ################################ Seccion de funciones para botones #########################################
 #Boton grabar
 def Btn_grabar():
-	Record_audio()
+	messagebox.showinfo(message="Comenzará grabacion de 2 segundos", title="")
+	Record_audio()#-----------------------------------------------------------------------------------------
+
 #Boton play original ###################################
 def Btn_play(name_file):
 	Open_audio(name_file+'.wav')
@@ -178,17 +180,24 @@ def delete_values():
 	F_high.set("")
 	Name_File.set("")
 
-def close_window(): 
-	    root.destroy()
-	    exit()
+def close_window():
+        cerrar = messagebox.askyesno(message="Seguro que quieres salir?")
+        if cerrar == True:
+            root.destroy()
 
 ############################################################################################################
 #Configuracion ventana
 root = Tk()
 #root. geometry('1000x1000')
 root.title('Filtro Pasa-Banda -- Edgar Lara')
+root.protocol("WM_DELETE_WINDOW", close_window)
 root.configure(background='#696969')
 image = PhotoImage( file = "IMG_GUI.png" )
+#imagen_rec = PhotoImage( file = "Btn_verde.png" ); imagen_rec.resize((450, 350))
+rec_img_ = 'micro.png'
+image_rec = Image. open(rec_img_)
+image_rec = image_rec. resize((40, 40), Image. ANTIALIAS)
+image_rec = ImageTk. PhotoImage(image_rec)
 image_label = Label(image = image).grid(row = 0, padx=27, pady=20, columnspan=5)
 
 ############################################################################################################
@@ -198,6 +207,7 @@ F_low.set(400); F_high.set(800); #Name_File.set('Grabacion');
 
 F_low_label = Label(root, text = "F baja = ").grid(row = 3, column = 0)
 F_high_label = Label(root, text = "F alta = ").grid(row = 4, column = 0)
+Rec_img = Label(root, image=image_rec).grid(row = 2, column = 2, padx=2)
 Name_File_label = Label(root, text = "Nombre archivo:").grid(row = 3, column = 2,  padx=2, pady=2)
 Section_Record = Label(root, bg = '#20B2AA', text = "    Controles de audio    ").grid(row = 1, column = 3,  padx=2, pady=2)
 
