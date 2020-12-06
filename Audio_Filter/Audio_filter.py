@@ -7,7 +7,7 @@ from scipy.signal import butter, filtfilt
 import numpy as np
 from math import pi
 from time import sleep
-from tkinter import *
+from tkinter import *; from tkinter import ttk
 from PIL import ImageTk, Image
 import os
 os.system('clear')
@@ -44,7 +44,8 @@ def Definir_variables():
 	global Longy; global seconds; global Diftime; global time; 
 	Longy = len(y)
 	#Diftime = seconds/Longy;
-	seconds = Longy/fs
+	#seconds = Longy/fs
+	seconds = 2
 	Diftime = 1/fs
 	time = np.arange(0, seconds, Diftime).tolist()
 
@@ -192,8 +193,8 @@ image_label = Label(image = image).grid(row = 0, padx=27, pady=20, columnspan=5)
 
 ############################################################################################################
 #Configiracion etiquetas y cajas de texto
-F_low = StringVar(); F_high = StringVar(); Name_File = StringVar();
-F_low.set(400); F_high.set(800); Name_File.set('Grabacion'); 
+F_low = StringVar(); F_high = StringVar(); #Name_File = StringVar();
+F_low.set(400); F_high.set(800); #Name_File.set('Grabacion'); 
 
 F_low_label = Label(root, text = "F baja = ").grid(row = 3, column = 0)
 F_high_label = Label(root, text = "F alta = ").grid(row = 4, column = 0)
@@ -202,14 +203,18 @@ Section_Record = Label(root, bg = '#20B2AA', text = "    Controles de audio    "
 
 F_low__entry = Entry(root, textvariable = F_low, width =10).grid(row = 3, column = 1)
 F_high_entry = Entry(root, textvariable = F_high, width =10).grid(row = 4, column = 1)
-Name_File_entry = Entry(root, textvariable = Name_File).grid(row = 3, column = 3)
+#Name_File_entry = Entry(root, textvariable = Name_File).grid(row = 3, column = 3)
+files_names = ['Grabacion', 'Grabacion_', 'Grabacion_E', 'BEEP', 'CRACK1', 'CRACK2', 'HBD', 'HEARTBEAT', 'MESSAGE', 'TEST']
+Name_file_box = ttk.Combobox(root, value = files_names, width =18)
+Name_file_box.current(0)
+Name_file_box.grid(row = 3, column = 3)
 
 ############################################################################################################
 #Botones
 Erase_button = Button(root, bg ='#008B8B', fg='white', text = "Limpiar valores", width =15, command = delete_values).grid(row = 8, column = 0, padx=2, pady=2)
 Record_button = Button(root, bg ='#008B8B', fg='white', text = "Grabar", width =20, command = Btn_grabar).grid(row = 2, column = 3, padx=2, pady=2)
-Play_Rec_O_button = Button(root, bg ='#483D8B', fg='white', text = "Play Original", width =20, command = lambda: Btn_play(Name_File.get())).grid(row = 4, column = 3, padx=2, pady=2)
-Play_Rec_F_button = Button(root, bg ='#483D8B', fg='white', text = "Play Filtrado", width =20, command = lambda: Btn_play_filtrado(Name_File.get(), float(F_low.get()), float(F_high.get()))).grid(row = 5, column = 3, padx=2, pady=2)
-Plot_Rec_button = Button(root, bg ='#483D8B', fg='white', text = "Graficar", width =20, command = lambda: Btn_grafica_mixta(Name_File.get(), float(F_low.get()), float(F_high.get()))).grid(row = 6, column = 3, padx=2, pady=2)
+Play_Rec_O_button = Button(root, bg ='#483D8B', fg='white', text = "Play Original", width =20, command = lambda: Btn_play(Name_file_box.get())).grid(row = 4, column = 3, padx=2, pady=2)
+Play_Rec_F_button = Button(root, bg ='#483D8B', fg='white', text = "Play Filtrado", width =20, command = lambda: Btn_play_filtrado(Name_file_box.get(), float(F_low.get()), float(F_high.get()))).grid(row = 5, column = 3, padx=2, pady=2)
+Plot_Rec_button = Button(root, bg ='#483D8B', fg='white', text = "Graficar", width =20, command = lambda: Btn_grafica_mixta(Name_file_box.get(), float(F_low.get()), float(F_high.get()))).grid(row = 6, column = 3, padx=2, pady=2)
 my_button_close = Button(root, text="Cerrar ventana", bg ='red', fg='white', width =20, command=close_window).grid(row = 8, column = 3) 
 root.mainloop()
