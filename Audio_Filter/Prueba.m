@@ -1,8 +1,9 @@
 % Filtro pasa-banda
 % Edgar Lara
 clear all; close all; clc;
+%pkg load signal;
 
-sec = 2;
+sec = 2; flow_ = 400; fhigh_ = 800;
 % Grabar audio y reproducirlo
 %Fs = 44100;
 %MyVoice = audiorecorder(Fs,16,1);
@@ -13,8 +14,11 @@ sec = 2;
 %y = getaudiodata(MyVoice,'double');
  
 % Abrir audio y reproducirlo
-[y,Fs] = audioread('Grabacion.wav');
-%sound(y.*30,Fs);
+
+Audios = {'Grabacion.wav'; 'Campana_1.wav'; 'Campana_2.wav'; 'Chasquidos.wav';  'Dedos_purados.wav';
+				'Esferas_Newton.wav'; 'Escribir.wav';  'Guitarra_1.wav'; 'Guitarra_2.wav'; 'Toc_Toc.wav'};
+[y,Fs] = audioread(Audios{1});
+sound(y.*50,Fs);
  
 % Datos necesarios de la señal
 %y = getaudiodata(MyVoice,'double');
@@ -39,8 +43,8 @@ Angle=(180/pi()).*PhaseAudio;
 
 %-------------------------------------------------------------------------
 % Frecuencias de corte para análisis de la señal
-flow = 400; %frecuencia baja
-fhigh = 800; %frecuencia alta
+flow = flow_; %frecuencia baja
+fhigh = fhigh_; %frecuencia alta
 wclow=flow*1.25*pi;
 wchigh=fhigh*1.25*pi;
 ffiltro=Longy/max(time);
@@ -50,7 +54,7 @@ ffiltro1 = ffiltro*Long_OriginalSignal;
 Wnd1=[wclow/ffiltro wchigh/ffiltro];
 [f1a,g1a]=butter(4,Wnd1/2,'bandpass');
 FilteredSignal= filtfilt(f1a,g1a,y);
-%sound(FilteredSignal.*30,Fs);
+sound(FilteredSignal.*50,Fs);
 
 %-------------------------------------------------------------------------
 % FFT de la señal de audio (RADIOGRAFÍA DE LA SEÑAL -FILTRADA-)
@@ -78,13 +82,13 @@ Angle2=(180/pi()).*PhaseAudio2;
 %grid on;
 
 figure(3)
-plot(f1,logY1,'r')
-hold on;
-plot(f2,logY2,'b')
-grid on;
-
-figure(4)
 plot(y,'b')
 hold on;
 plot(FilteredSignal,'r')
+grid on;
+
+figure(4)
+plot(f1,logY1,'b')
+hold on;
+plot(f2,logY2,'r')
 grid on;
