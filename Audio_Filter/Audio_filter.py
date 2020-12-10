@@ -23,9 +23,9 @@ def Record_audio():
 	sd.wait()
 	print('Grabado'); print('Guardando...')
 	#Guarda el audio
-	write('Borrar.wav', fs, myrecording)
+	write('Grabacion.wav', fs, myrecording)
 	print('Guardado')
-	y,fs = sf.read('Grabacion_E.wav')
+	#y,fs = sf.read('Grabacion_E.wav')
 
 ############################################################################################################
 #Abre archivo de audio
@@ -220,7 +220,8 @@ Section_Record = Label(root, bg = '#20B2AA', text = "    Controles de audio    "
 F_low__entry = Entry(root, textvariable = F_low, width =6, font=helv36,).grid(row = 3, column = 1)
 F_high_entry = Entry(root, textvariable = F_high, width =6, font=helv36,).grid(row = 4, column = 1)
 #Name_File_entry = Entry(root, textvariable = Name_File).grid(row = 3, column = 3)
-files_names = ['Grabacion', 'Grabacion_', 'Grabacion_E', 'BEEP', 'CRACK1', 'CRACK2', 'HBD', 'HEARTBEAT', 'MESSAGE', 'TEST', 'Campana_1', 'Campana_2', 'Guitarra_1', 'Guitarra_2', 'Esferas_Newton', 'Chasquidos', 'Aplausos', 'Escribir', 'Borrar']
+files_names = ['Grabacion', 'Campana_1', 'Campana_2', 'Chasquidos',  'Dedos_purados',
+				'Esferas_Newton', 'Escribir',  'Guitarra_1', 'Guitarra_2', 'Toc_Toc']
 Name_file_box = ttk.Combobox(root, value = files_names, width =18, font=helv36,)
 Name_file_box.current(0)
 Name_file_box.grid(row = 3, column = 3)
