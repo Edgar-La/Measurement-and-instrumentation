@@ -7,7 +7,7 @@ from scipy.signal import butter, filtfilt
 import numpy as np
 from math import pi
 from time import sleep
-from tkinter import *; from tkinter import ttk, messagebox
+from tkinter import *; from tkinter import ttk, messagebox; from tkinter import font as tkFont
 from PIL import ImageTk, Image
 import os
 os.system('clear')
@@ -23,7 +23,7 @@ def Record_audio():
 	sd.wait()
 	print('Grabado'); print('Guardando...')
 	#Guarda el audio
-	write('Test.wav', fs, myrecording)
+	write('Borrar.wav', fs, myrecording)
 	print('Guardado')
 	y,fs = sf.read('Grabacion_E.wav')
 
@@ -192,39 +192,46 @@ root = Tk()
 root.title('Filtro Pasa-Banda -- Edgar Lara')
 root.protocol("WM_DELETE_WINDOW", close_window)
 root.configure(background='#696969')
-image = PhotoImage( file = "IMG_GUI.png" )
+imagen_portada = Image.open('IMG_GUI.png')
+imagen_portada = imagen_portada. resize((700, 400), Image. ANTIALIAS)
+imagen_portada = ImageTk. PhotoImage(imagen_portada)
+image_label = Label(image = imagen_portada).grid(row = 0, padx=20, pady=10, columnspan=5)
+
+#image = PhotoImage( file = "IMG_GUI.png" )
+#image_label = Label(image = image).grid(row = 0, padx=27, pady=20, columnspan=5)
+
 #imagen_rec = PhotoImage( file = "Btn_verde.png" ); imagen_rec.resize((450, 350))
-rec_img_ = 'micro.png'
-image_rec = Image. open(rec_img_)
+image_rec = Image.open('micro.png')
 image_rec = image_rec. resize((40, 40), Image. ANTIALIAS)
 image_rec = ImageTk. PhotoImage(image_rec)
-image_label = Label(image = image).grid(row = 0, padx=27, pady=20, columnspan=5)
 
 ############################################################################################################
 #Configiracion etiquetas y cajas de texto
+helv36 = tkFont.Font(family='Helvetica', size=15, weight=tkFont.BOLD)
 F_low = StringVar(); F_high = StringVar(); #Name_File = StringVar();
 F_low.set(400); F_high.set(800); #Name_File.set('Grabacion'); 
 
-F_low_label = Label(root, text = "F baja = ").grid(row = 3, column = 0)
-F_high_label = Label(root, text = "F alta = ").grid(row = 4, column = 0)
+F_low_label = Label(root, text = "Frecuencia baja = ", font=helv36).grid(row = 3, column = 0)
+F_high_label = Label(root,text = "Frecuencia alta = ", font=helv36).grid(row = 4, column = 0)
 Rec_img = Label(root, image=image_rec).grid(row = 2, column = 2, padx=2)
-Name_File_label = Label(root, text = "Nombre archivo:").grid(row = 3, column = 2,  padx=2, pady=2)
-Section_Record = Label(root, bg = '#20B2AA', text = "    Controles de audio    ").grid(row = 1, column = 3,  padx=2, pady=2)
+Name_File_label = Label(root, text = "Nombre archivo:", font=helv36).grid(row = 3, column = 2,  padx=2, pady=2)
+Section_Record = Label(root, bg = '#20B2AA', text = "    Controles de audio    ", font=helv36).grid(row = 1, column = 3,  padx=2, pady=2)
 
-F_low__entry = Entry(root, textvariable = F_low, width =10).grid(row = 3, column = 1)
-F_high_entry = Entry(root, textvariable = F_high, width =10).grid(row = 4, column = 1)
+F_low__entry = Entry(root, textvariable = F_low, width =6, font=helv36,).grid(row = 3, column = 1)
+F_high_entry = Entry(root, textvariable = F_high, width =6, font=helv36,).grid(row = 4, column = 1)
 #Name_File_entry = Entry(root, textvariable = Name_File).grid(row = 3, column = 3)
-files_names = ['Grabacion', 'Grabacion_', 'Grabacion_E', 'BEEP', 'CRACK1', 'CRACK2', 'HBD', 'HEARTBEAT', 'MESSAGE', 'TEST']
-Name_file_box = ttk.Combobox(root, value = files_names, width =18)
+files_names = ['Grabacion', 'Grabacion_', 'Grabacion_E', 'BEEP', 'CRACK1', 'CRACK2', 'HBD', 'HEARTBEAT', 'MESSAGE', 'TEST', 'Campana_1', 'Campana_2', 'Guitarra_1', 'Guitarra_2', 'Esferas_Newton', 'Chasquidos', 'Aplausos', 'Escribir', 'Borrar']
+Name_file_box = ttk.Combobox(root, value = files_names, width =18, font=helv36,)
 Name_file_box.current(0)
 Name_file_box.grid(row = 3, column = 3)
 
 ############################################################################################################
 #Botones
-Erase_button = Button(root, bg ='#008B8B', fg='white', text = "Limpiar valores", width =15, command = delete_values).grid(row = 8, column = 0, padx=2, pady=2)
-Record_button = Button(root, bg ='#008B8B', fg='white', text = "Grabar", width =20, command = Btn_grabar).grid(row = 2, column = 3, padx=2, pady=2)
-Play_Rec_O_button = Button(root, bg ='#483D8B', fg='white', text = "Play Original", width =20, command = lambda: Btn_play(Name_file_box.get())).grid(row = 4, column = 3, padx=2, pady=2)
-Play_Rec_F_button = Button(root, bg ='#483D8B', fg='white', text = "Play Filtrado", width =20, command = lambda: Btn_play_filtrado(Name_file_box.get(), float(F_low.get()), float(F_high.get()))).grid(row = 5, column = 3, padx=2, pady=2)
-Plot_Rec_button = Button(root, bg ='#483D8B', fg='white', text = "Graficar", width =20, command = lambda: Btn_grafica_mixta(Name_file_box.get(), float(F_low.get()), float(F_high.get()))).grid(row = 6, column = 3, padx=2, pady=2)
-my_button_close = Button(root, text="Cerrar ventana", bg ='red', fg='white', width =20, command=close_window).grid(row = 8, column = 3) 
+#helv36 = tkFont.Font(family='Helvetica', size=15, weight=tkFont.BOLD)
+Erase_button = Button(root, bg ='#008B8B', fg='white', font=helv36, text = "Limpiar valores", width =15, command = delete_values).grid(row = 8, column = 0, padx=2, pady=2)
+Record_button = Button(root, bg ='#008B8B', fg='white', font=helv36, text = "Grabar", width =20, command = Btn_grabar).grid(row = 2, column = 3, padx=2, pady=2)
+Play_Rec_O_button = Button(root, bg ='#483D8B', fg='white', font=helv36, text = "Play Original", width =20, command = lambda: Btn_play(Name_file_box.get())).grid(row = 4, column = 3, padx=2, pady=2)
+Play_Rec_F_button = Button(root, bg ='#483D8B', fg='white', font=helv36, text = "Play Filtrado", width =20, command = lambda: Btn_play_filtrado(Name_file_box.get(), float(F_low.get()), float(F_high.get()))).grid(row = 5, column = 3, padx=2, pady=2)
+Plot_Rec_button = Button(root, bg ='#483D8B', fg='white', font=helv36, text = "Graficar", width =20, command = lambda: Btn_grafica_mixta(Name_file_box.get(), float(F_low.get()), float(F_high.get()))).grid(row = 6, column = 3, padx=2, pady=2)
+my_button_close = Button(root, text="Cerrar ventana", bg ='red', fg='white', font=helv36, width =20, command=close_window).grid(row = 8, column = 3) 
 root.mainloop()
