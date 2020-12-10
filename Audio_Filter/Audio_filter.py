@@ -98,7 +98,7 @@ def Play_audio_filtrado():
 ############################################################################################################
 # FFT de la señal de audio (RADIOGRAFÍA DE LA SEÑAL)
 def Radiografia_senal_filtrada():
-	global f2; global logY2; global PhaseAudio2; global Angle2;
+	global f2; global logY2; #global PhaseAudio2; global Angle2;
 	AudioAnalysis2 = 2**nextpow2(Longy)		#NUMERO DE MUESTRAS
 	AudiOriginal2 = fft(FilteredSignal, AudioAnalysis2)	#Aplicamos la FFT
 	f2 = fs*(np.arange((-AudioAnalysis2/2), (AudioAnalysis2/2)))/AudioAnalysis2
@@ -178,7 +178,7 @@ def Btn_grafica_mixta(name_file, flow_, fhigh_):
 def delete_values():
 	F_low.set("")
 	F_high.set("")
-	Name_File.set("")
+	#Name_File.set("")
 
 def close_window():
         cerrar = messagebox.askyesno(message="Seguro que quieres salir?")
@@ -197,10 +197,7 @@ imagen_portada = imagen_portada. resize((700, 400), Image. ANTIALIAS)
 imagen_portada = ImageTk. PhotoImage(imagen_portada)
 image_label = Label(image = imagen_portada).grid(row = 0, padx=20, pady=10, columnspan=5)
 
-#image = PhotoImage( file = "IMG_GUI.png" )
-#image_label = Label(image = image).grid(row = 0, padx=27, pady=20, columnspan=5)
 
-#imagen_rec = PhotoImage( file = "Btn_verde.png" ); imagen_rec.resize((450, 350))
 image_rec = Image.open('micro.png')
 image_rec = image_rec. resize((40, 40), Image. ANTIALIAS)
 image_rec = ImageTk. PhotoImage(image_rec)
@@ -219,7 +216,7 @@ Section_Record = Label(root, bg = '#20B2AA', text = "    Controles de audio    "
 
 F_low__entry = Entry(root, textvariable = F_low, width =6, font=helv36,).grid(row = 3, column = 1)
 F_high_entry = Entry(root, textvariable = F_high, width =6, font=helv36,).grid(row = 4, column = 1)
-#Name_File_entry = Entry(root, textvariable = Name_File).grid(row = 3, column = 3)
+
 files_names = ['Grabacion', 'Campana_1', 'Campana_2', 'Chasquidos',  'Dedos_purados',
 				'Esferas_Newton', 'Escribir',  'Guitarra_1', 'Guitarra_2', 'Toc_Toc']
 Name_file_box = ttk.Combobox(root, value = files_names, width =18, font=helv36,)
@@ -228,7 +225,6 @@ Name_file_box.grid(row = 3, column = 3)
 
 ############################################################################################################
 #Botones
-#helv36 = tkFont.Font(family='Helvetica', size=15, weight=tkFont.BOLD)
 Erase_button = Button(root, bg ='#008B8B', fg='white', font=helv36, text = "Limpiar valores", width =15, command = delete_values).grid(row = 8, column = 0, padx=2, pady=2)
 Record_button = Button(root, bg ='#008B8B', fg='white', font=helv36, text = "Grabar", width =20, command = Btn_grabar).grid(row = 2, column = 3, padx=2, pady=2)
 Play_Rec_O_button = Button(root, bg ='#483D8B', fg='white', font=helv36, text = "Play Original", width =20, command = lambda: Btn_play(Name_file_box.get())).grid(row = 4, column = 3, padx=2, pady=2)
